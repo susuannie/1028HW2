@@ -236,6 +236,14 @@ jupyter lab notebooks/HW2_Life_Expectancy_Regression.ipynb
 | 對照範本補強 | 比對老師推薦的範本 repo，補上資訊圖表、網頁截圖、報告書 PDF、預測樣本表 | 決定「兩種 problem」維持兩個預測任務的解讀 |
 | NotebookLM | 提供研究來源建議與提問內容；撰寫「與本作業的比較」表 | 本人操作 NotebookLM 產生摘要 |
 
+### 嚴謹校驗紀錄（實際驗證與修正）
+
+1. **特徵選擇規則修正**：原先採 1-SE rule，只留下 3 個特徵、測試 R² 降至 0.789；改為「CV RMSE 不超過最佳值 1%」後選出 8 個特徵，再以 VIF 剔除五歲以下死亡數（VIF 198），最終 7 個特徵、R² 0.811。
+2. **網頁計算交叉驗證**：瀏覽器端 JavaScript 的 OLS 與 t 分配，以 Python statsmodels 對 50_Startups 逐項比對，係數、標準誤、p 值、95% CI／PI 皆一致。
+3. **文字敘述先驗證再寫入**：「教育年數與收入組成高度相關」經實際計算 r = 0.92 後才寫入報告。
+4. **如實報告區間覆蓋率**：95% 預測區間在測試集的實測覆蓋率為 91.2%（非理論值 95%），並說明是未見過國家的分布偏移所致。
+5. **部署錯誤修正**：Vercel 因 requirements.txt 誤判為 Python 專案而建置失敗，以 vercel.json 指定靜態網站並加入 .vercelignore 修正。
+
 ## 【NotebookLM 摘要】
 
 > 以 NotebookLM 研究網路上使用同一份 WHO Life Expectancy 資料集的解法，以下為 NotebookLM 產生的摘要。

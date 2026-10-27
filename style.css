@@ -151,6 +151,28 @@ input[type=number] { width: 90px; }
 .inputs-grid label { font-size: 13px; display: block; }
 .inputs-grid input, .inputs-grid select { width: 100%; }
 
+/* AI 協作與 NotebookLM */
+.ai-section { margin-top: 10px; }
+.ai-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px;
+  border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+.ai-head h2 { margin: 0 0 6px; font-size: 22px; color: var(--head-1); }
+.ai-head .muted { margin: 0 0 6px; }
+.ai-card { font-size: 14.5px; }
+.ai-card p, .ai-card li { line-height: 1.75; }
+.ai-card ol, .ai-card ul { padding-left: 20px; margin: 4px 0 10px; }
+.ai-card li { margin-bottom: 4px; }
+.ai-notebooklm { border-left: 5px solid var(--accent); }
+.ai-gpt { border-left: 5px solid var(--good); }
+.ai-card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 12px; }
+.ai-card-head h3 { margin: 0; font-size: 18px; color: var(--ink); }
+.badge { display: inline-block; font-size: 13px; font-weight: 600; padding: 3px 12px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent); text-decoration: none; white-space: nowrap; }
+.ai-gpt .badge { background: #e9eddc; color: var(--good); }
+a.badge:hover { text-decoration: underline; }
+.verify li { color: var(--muted); }
+.verify li b { color: var(--ink); }
+
 .footer { color: var(--muted); font-size: 13px; padding-bottom: 30px; }
 .loading { padding: 40px; text-align: center; color: var(--muted); }
 img.diag { width: 100%; border: 1px solid var(--line); border-radius: 8px; }

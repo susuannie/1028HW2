@@ -80,6 +80,57 @@
 
       <div id="custom-results"></div>
     </div>
+    <section class="ai-section">
+      <div class="ai-head">
+        <h2>AI 協作與同主題網路解法研究</h2>
+        <span class="muted">符合作業要求：NotebookLM 摘要（100 字以上）與 GPT 輔助標示</span>
+      </div>
+      <div class="grid-2">
+        <div class="card ai-card ai-notebooklm">
+          <div class="ai-card-head">
+            <h3>【NotebookLM 摘要】</h3>
+            <span class="badge">網路解法文獻研究</span>
+          </div>
+          <p><b>研究來源：</b>
+            <a href="https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who" target="_blank" rel="noopener">Kaggle 資料集頁面</a>、
+            <a href="https://github.com/Akshu577/life-expectancy-analysis" target="_blank" rel="noopener">Akshu577</a>（回歸與特徵選擇）、
+            <a href="https://github.com/SamruddhiGoswami/LifeExpectancyAnalysis" target="_blank" rel="noopener">SamruddhiGoswami</a>（線性回歸與殘差診斷）、
+            <a href="https://github.com/ranjeetmaurya-git/Life-Expectancy-Analysis-Project" target="_blank" rel="noopener">ranjeetmaurya-git</a>（多種回歸模型與 Streamlit）、
+            <a href="https://github.com/NysaSetiawan/LifeExpectancyAnalysis" target="_blank" rel="noopener">NysaSetiawan</a>（R Shiny 互動儀表板）
+          </p>
+          <p><b>WHO Life Expectancy 資料集預測平均壽命方法摘要（NotebookLM 產生）：</b></p>
+          <ol>
+            <li><b>資料前處理</b>：常以國家中位數或全域中位數填補缺失值，或直接剔除缺值過多之欄位；異常值主要採用 <b>1.5×IQR 規則</b>或<b>極限截斷（Capping）</b>處理；對偏態嚴重之特徵（如 GDP、HIV/AIDS 及人口數）則進行 <b>Log 轉換</b>。</li>
+            <li><b>模型與特徵選擇</b>：主要採用<b>線性回歸（Linear Regression）</b>與<b>隨機森林（Random Forest）</b>。特徵選擇則結合相關性矩陣（排除高度相關特徵 |r| &gt; 0.75）、逐步前向選擇法（Forward Selection）及 P 值顯著性檢定（p ≤ 0.05）。</li>
+            <li><b>重要特徵</b>：<b>受教育年限（Schooling）</b>與<b>收入資源組成（Income Composition / HDI）</b>是最關鍵的正向預測特徵，而<b>成人死亡率</b>與 <b>HIV/AIDS</b> 則是主要的負向特徵。</li>
+            <li><b>模型表現</b>：線性回歸模型在測試集上的 R² 大約落在 <b>0.85</b> 左右，RMSE 大約為 <b>3.57–3.63 年</b>。</li>
+            <li><b>模型優缺點對比</b>：線性回歸<b>可解釋性高、結構簡單</b>，但較難自動捕捉非線性關係與複合特徵互動；隨機森林等非線性模型能有效處理複雜互動與異常值，<b>預測準確度與 R² 通常更高</b>，但模型屬於灰黑盒，<b>可解釋性較低</b>。</li>
+          </ol>
+          <p><b>與本作業的比較（本人分析）：</b>網路上多採隨機切分，同一國家其他年份已出現在訓練集，R² 約 0.85；本作業<b>依國家分組切分</b>，測試集是 37 個未見過的國家，7 特徵 OLS 的 R² 為 0.811（全特徵 0.845），結果較保守但更接近真實應用。重要特徵結論一致；教育年數與收入組成高度相關（r = 0.92），因此本作業只保留收入組成。</p>
+        </div>
+
+        <div class="card ai-card ai-gpt">
+          <div class="ai-card-head">
+            <h3>【GPT 輔助內容】</h3>
+            <a class="badge" href="notebooks/Claude_conversation.pdf" target="_blank" rel="noopener">對話紀錄 PDF</a>
+          </div>
+          <p><b>AI 工具：</b>本作業使用 <b>Claude（Anthropic）</b>，透過 VS Code 的 Claude Code 擴充功能使用，未使用 ChatGPT。</p>
+          <p><b>協作分工：</b></p>
+          <ul>
+            <li><b>Claude</b>：資料下載與品質檢查、CRISP-DM Notebook（特徵選擇、OLS／Ridge／Lasso、CI／PI、五大假設檢驗）、本互動網站與瀏覽器端 OLS 引擎、報告書與資訊圖表、Vercel 部署除錯。</li>
+            <li><b>本人</b>：選定 WHO 平均壽命主題與 Vercel 部署方式、確認特徵選擇與分析結果、決定兩種 problem 的設計、提出網頁風格需求、操作 NotebookLM 進行文獻研究、上傳 GitHub 與部署。</li>
+          </ul>
+          <p><b>嚴謹校驗紀錄（實際驗證與修正）：</b></p>
+          <ol class="verify">
+            <li><b>特徵選擇規則修正</b>：原先採 1-SE rule，只留下 3 個特徵、測試 R² 降至 0.789；改為「CV RMSE 不超過最佳值 1%」後選出 8 個特徵，再以 VIF 剔除五歲以下死亡數（VIF 198），最終 7 個特徵、R² 0.811。</li>
+            <li><b>網頁計算交叉驗證</b>：瀏覽器端 JavaScript 的 OLS 與 t 分配，以 Python statsmodels 對 50_Startups 逐項比對，係數、標準誤、p 值、95% CI／PI 皆一致。</li>
+            <li><b>文字敘述先驗證再寫入</b>：「教育年數與收入組成高度相關」經實際計算 r = 0.92 後才寫入報告。</li>
+            <li><b>如實報告區間覆蓋率</b>：95% 預測區間在測試集的實測覆蓋率為 91.2%（非理論值 95%），並說明是未見過國家的分布偏移所致。</li>
+            <li><b>部署錯誤修正</b>：Vercel 因 requirements.txt 誤判為 Python 專案而建置失敗，以 vercel.json 指定靜態網站並加入 .vercelignore 修正。</li>
+          </ol>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="wrap footer">

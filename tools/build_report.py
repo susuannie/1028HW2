@@ -51,6 +51,10 @@ code { background: #f3eadf; padding: 0 4px; border-radius: 3px; font-size: 9.5pt
 pre { background: #faf5ee; padding: 8px 10px; border-radius: 6px; font-size: 9pt; white-space: pre-wrap; break-inside: avoid; }
 pre code { background: none; padding: 0; }
 hr { border: 0; border-top: 1px dashed #e7dccd; margin: 18px 0; }
+.toc { background: #faf5ee; border: 1px solid #e7dccd; border-radius: 6px; padding: 8px 14px; margin-bottom: 14px; }
+.toc ul { margin: 4px 0 0; padding-left: 18px; columns: 2; }
+.toc li { margin: 1px 0; }
+.toc li.req { color: #8c6240; font-weight: 700; }
 """
 
 
@@ -58,7 +62,11 @@ def build_html(author):
     text = (ROOT / "README.md").read_text(encoding="utf-8")
     title = re.search(r"^# (.+)$", text, flags=re.M).group(1)
     text = re.sub(r"^# .+\n", "", text, count=1, flags=re.M)
+    # 目錄：列出所有二級標題，標出作業規定的 AI 段落
+    headings = re.findall(r"^## (.+)$", text, flags=re.M)
+    toc = "".join(f'<li class="{"req" if "】" in h else ""}">{h}</li>' for h in headings)
     body = markdown.markdown(text, extensions=["tables", "fenced_code", "sane_lists"])
+    body = f'<div class="toc"><b>目錄</b><ul>{toc}</ul></div>' + body
     # 讓圖片在 notebooks/ 底下的 HTML 也找得到
     body = re.sub(r'src="(?!https?:|file:)([^"]+)"', lambda m: f'src="{(ROOT / m.group(1)).as_uri()}"', body)
     meta = f"{author} · " if author else ""
