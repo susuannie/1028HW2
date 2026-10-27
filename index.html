@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WHO 平均壽命回歸</title>
+  <meta name="description" content="AIoT HW2：以 WHO Life Expectancy 資料集進行多元線性回歸（CRISP-DM），含特徵選擇、模型評估與 95% 信賴／預測區間。">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="eyebrow">AIoT 物聯網數據分析與應用 · HW2 Multiple Linear Regression</p>
+      <h1>WHO 各國平均壽命 — 多元線性回歸</h1>
+      <p class="sub">
+        資料集：<a href="https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who" target="_blank" rel="noopener">Life Expectancy (WHO) · Kaggle</a>
+        · 193 國 × 2000–2015 · 2,938 筆 · 20 個特徵 · 依 CRISP-DM 流程
+      </p>
+      <div class="picker">
+        <label for="problem-select">選擇問題</label>
+        <select id="problem-select">
+          <option value="problem1">Problem 1：預測平均壽命（Life expectancy）</option>
+          <option value="problem2">Problem 2：預測成人死亡率（Adult Mortality）</option>
+          <option value="custom">★ 自訂資料集：輸入任意 CSV（URL／上傳）</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="problem-view"></div>
+
+    <div id="custom-view" hidden>
+      <section class="card">
+        <h2>自訂資料集回歸</h2>
+        <p class="muted">輸入 CSV 網址或上傳檔案，系統自動判斷數值／類別欄位（類別欄位做 one-hot，去掉第一個水準避免虛擬變數陷阱），
+          在瀏覽器以 β = (XᵀX)⁻¹Xᵀy 計算 OLS，並給出 95% 信賴區間與預測區間。網址需允許跨網域讀取（例如 raw.githubusercontent.com）。</p>
+        <div class="row">
+          <input id="csv-url" type="url" value="https://raw.githubusercontent.com/Avik-Jain/100-Days-Of-ML-Code/master/datasets/50_Startups.csv" aria-label="CSV URL">
+          <button id="btn-load-url" class="btn primary">載入網址</button>
+        </div>
+        <div class="row">
+          <label class="btn file">上傳 CSV<input id="csv-file" type="file" accept=".csv,text/csv" hidden></label>
+          <button id="btn-load-sample" class="btn">範例：50_Startups</button>
+          <button id="btn-load-who" class="btn">範例：WHO Life Expectancy</button>
+        </div>
+        <p id="csv-status" class="status"></p>
+        <div id="csv-preview" class="table-scroll"></div>
+      </section>
+
+      <section id="custom-config" class="card" hidden>
+        <h2>設定模型</h2>
+        <div class="grid-2">
+          <div>
+            <label class="field-label" for="target-select">目標變數 (y)</label>
+            <select id="target-select"></select>
+            <div class="row small-gap">
+              <label class="field-label inline" for="test-ratio">測試集比例</label>
+              <input id="test-ratio" type="number" min="0.1" max="0.5" step="0.05" value="0.2">
+              <label class="field-label inline" for="seed">隨機種子</label>
+              <input id="seed" type="number" value="42">
+            </div>
+            <div class="row">
+              <button id="btn-run" class="btn primary">執行回歸</button>
+              <button id="btn-backward" class="btn">後向消去法（p &gt; 0.05）</button>
+            </div>
+          </div>
+          <div>
+            <span class="field-label">特徵 (X)</span>
+            <div class="row small-gap">
+              <button id="btn-all" class="btn tiny">全選</button>
+              <button id="btn-none" class="btn tiny">全不選</button>
+            </div>
+            <div id="feature-checks" class="checks"></div>
+          </div>
+        </div>
+        <p id="backward-log" class="status"></p>
+      </section>
+
+      <div id="custom-results"></div>
+    </div>
+  </main>
+
+  <footer class="wrap footer">
+    <p>原始碼、Notebook 與報告請見 GitHub repo 的 README。預測區間為統計模型結果，僅反映相關性，不代表因果。</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

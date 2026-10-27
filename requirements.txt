@@ -1,0 +1,10 @@
+# 僅 notebook 分析需要；網站為純靜態，不需安裝任何套件
+numpy
+pandas
+scikit-learn
+statsmodels
+scipy
+matplotlib
+seaborn
+jupyterlab
+markdown   # tools/build_report.py
