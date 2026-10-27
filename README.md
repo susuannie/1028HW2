@@ -1,6 +1,7 @@
 # AIoT HW2：WHO 各國平均壽命預測 — 多元線性回歸（CRISP-DM）
 
-- 🌐 **線上網站（Vercel）**：`https://<your-project>.vercel.app` ← 部署後替換
+- 🌐 **線上網站（Vercel）**：<https://1028hw2-pearl.vercel.app/>
+- 💻 **GitHub**：<https://github.com/susuannie/1028HW2>
 - 📓 **Notebook**：[notebooks/HW2_Life_Expectancy_Regression.ipynb](notebooks/HW2_Life_Expectancy_Regression.ipynb)
 - 📊 **資料集**：[Life Expectancy (WHO) — Kaggle, KumarRajarshi](https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who)
 - 📄 **報告書 PDF**：[notebooks/HW2_report.pdf](notebooks/HW2_report.pdf)
@@ -48,6 +49,7 @@
 ├── assets/web_*.png                   # 網頁截圖
 ├── assets/*.png                       # Notebook 輸出圖表
 ├── tools/build_report.py              # README → 報告書 PDF
+├── tools/export_conversation.py       # Claude Code 對話紀錄 → 對話 PDF
 └── requirements.txt                   # Notebook 所需套件
 ```
 
@@ -208,7 +210,7 @@ jupyter lab notebooks/HW2_Life_Expectancy_Regression.ipynb
 
 > 本作業的 AI 輔助工具為 **Claude（Anthropic），透過 VS Code 的 Claude Code 擴充功能使用**，未使用 ChatGPT。
 >
-> 完整對話紀錄 PDF：[notebooks/Claude_conversation.pdf](notebooks/Claude_conversation.pdf)
+> 對話紀錄 PDF（節錄與分析、建模、部署相關的專業討論）：[notebooks/Claude_conversation.pdf](notebooks/Claude_conversation.pdf)
 
 | 項目 | Claude 協助內容 | 本人確認／決定 |
 |---|---|---|
