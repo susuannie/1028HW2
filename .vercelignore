@@ -1,0 +1,5 @@
+# 網站是純靜態頁面；Python 檔只給 notebook 分析使用，部署時排除，避免 Vercel 誤判為 Python 專案
+requirements.txt
+tools/
+*.py
+*.ipynb
