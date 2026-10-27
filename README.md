@@ -41,6 +41,7 @@
 ├── model/problem1.json, problem2.json # Notebook 匯出的最終模型、評估結果、圖表資料
 ├── notebooks/HW2_Life_Expectancy_Regression.ipynb
 ├── notebooks/HW2_report.pdf           # 報告書（由本 README 產生）
+├── notebooks/Claude_conversation.pdf  # AI（Claude）對話紀錄
 ├── data/Life Expectancy Data.csv      # Kaggle 原始資料
 ├── data/50_Startups.csv               # 自訂資料集範例
 ├── assets/crisp_dm_infographic.png    # CRISP-DM 資訊圖表
@@ -203,20 +204,51 @@ jupyter lab notebooks/HW2_Life_Expectancy_Regression.ipynb
 
 ---
 
-## 【GPT 輔助內容】
+## 【GPT 輔助內容】（本作業使用 Claude）
 
-> 本作業使用 **Claude Code（Anthropic）** 作為 AI 輔助工具。對話紀錄匯出 PDF：`notebooks/AI_conversation.pdf` ← 待補
+> 本作業的 AI 輔助工具為 **Claude（Anthropic），透過 VS Code 的 Claude Code 擴充功能使用**，未使用 ChatGPT。
+>
+> 完整對話紀錄 PDF：[notebooks/Claude_conversation.pdf](notebooks/Claude_conversation.pdf)
 
-| 項目 | AI 協助內容 | 本人確認／修改 |
+| 項目 | Claude 協助內容 | 本人確認／決定 |
 |---|---|---|
-| 資料集選擇 | 依作業要求（>13 特徵）確認 WHO Life Expectancy 共 20 個特徵 | 本人選定主題 |
-| 資料前處理 | 指出 0 值缺值代碼、右偏欄位 log 轉換、panel data 需依國家分組切分 | |
-| 特徵選擇 | 實作 5 種方法比較與選擇規則；1-SE rule 只留 3 個特徵、測試 R² 下降，改為 1% 容忍度 + VIF 剔除 | |
-| 評估 | CI／PI、五大假設檢驗、cluster-robust SE | |
-| 網站 | HTML/JS 靜態網站、瀏覽器端 OLS 與 t 分配；已用 Python statsmodels 交叉驗證 JS 計算結果一致 | |
+| 資料集選擇 | 確認 WHO Life Expectancy 共 20 個特徵，符合 >13 的要求；從 GitHub 鏡像下載 Kaggle 原始檔 | 本人選定「各國平均壽命（WHO）」主題 |
+| 資料前處理 | 指出 0 值缺值代碼、右偏欄位 log 轉換、panel data 需依國家分組切分 | 確認處理方式 |
+| 特徵選擇 | 實作 5 種方法比較；1-SE rule 只留 3 個特徵、測試 R² 下降，改為 1% 容忍度 + VIF 剔除 | 詢問並確認最終特徵為 7 個的原因 |
+| 評估 | CI／PI、五大假設檢驗、cluster-robust SE | 逐項對照作業「分析任務」要求，確認皆已完成 |
+| 網站與部署 | HTML/JS 靜態網站、瀏覽器端 OLS 與 t 分配，並用 Python statsmodels 驗證 JS 計算結果一致；修正 Vercel 誤判為 Python 專案的部署錯誤 | 指定以 Vercel 部署；自行上傳 GitHub、部署 Vercel |
+| 網頁風格 | 將網頁與圖表改為奶茶／大地色系 | 本人提出風格需求 |
+| 對照範本補強 | 比對老師推薦的範本 repo，補上資訊圖表、網頁截圖、報告書 PDF、預測樣本表 | 決定「兩種 problem」維持兩個預測任務的解讀 |
+| NotebookLM | 提供研究來源建議與提問內容；撰寫「與本作業的比較」表 | 本人操作 NotebookLM 產生摘要 |
 
 ## 【NotebookLM 摘要】
 
-> ⚠️ 待補：請將網路上同主題（Kaggle「Life Expectancy (WHO)」的 notebooks、相關文章）加入 NotebookLM 進行研究，並將 NotebookLM 產生的摘要（100 字以上）貼在這裡。
+> 以 NotebookLM 研究網路上使用同一份 WHO Life Expectancy 資料集的解法，以下為 NotebookLM 產生的摘要。
 
-（NotebookLM 摘要內容）
+**WHO Life Expectancy 資料集預測平均壽命方法摘要：**
+
+1. **資料前處理**：常以國家中位數或全域中位數填補缺失值，或直接剔除缺值過多之欄位；異常值主要採用 **1.5×IQR 規則**或**極限截斷（Capping）**處理；對偏態嚴重之特徵（如 GDP、HIV/AIDS 及人口數）則進行 **Log 轉換**。
+2. **模型與特徵選擇**：主要採用**線性回歸（Linear Regression）**與**隨機森林（Random Forest）**。特徵選擇則結合相關性矩陣（排除高度相關特徵 |r| > 0.75）、逐步前向選擇法（Forward Selection）及 P 值顯著性檢定（p ≤ 0.05）。
+3. **重要特徵**：**受教育年限（Schooling）**與**收入資源組成（Income Composition / HDI）**是最關鍵的正向預測特徵，而**成人死亡率**與 **HIV/AIDS** 則是主要的負向特徵。
+4. **模型表現**：線性回歸模型在測試集上的 R² 大約落在 **0.85** 左右，RMSE 大約為 **3.57–3.63 年**。
+5. **模型優缺點對比**：線性回歸**可解釋性高、結構簡單**，但較難自動捕捉非線性關係與複合特徵互動；隨機森林等非線性模型能有效處理複雜互動與異常值，**預測準確度與 R² 通常更高**，但模型屬於灰黑盒，**可解釋性較低**。
+
+**參考來源（NotebookLM 加入的資料）**：
+
+- Kaggle 資料集頁面：<https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who>
+- <https://github.com/Akshu577/life-expectancy-analysis>（回歸與特徵選擇）
+- <https://github.com/SamruddhiGoswami/LifeExpectancyAnalysis>（線性回歸與殘差診斷）
+- <https://github.com/ranjeetmaurya-git/Life-Expectancy-Analysis-Project>（多種回歸模型與 Streamlit）
+- <https://github.com/NysaSetiawan/LifeExpectancyAnalysis>（R Shiny 互動儀表板）
+
+### 與本作業的比較（本人分析，非 NotebookLM 產生）
+
+| 面向 | 網路上常見做法 | 本作業 |
+|---|---|---|
+| 缺值、偏態 | 中位數補值、log 轉換 | 相同；另外把 `income_composition`、`schooling` 的 0 值視為缺值代碼 |
+| 特徵選擇 | 相關矩陣、前向選擇、p 值 | 比較 5 種方法（含前向選擇 SFS），再以 VIF > 10 剔除共線特徵 |
+| 重要特徵 | 教育、收入組成（正向）；成人死亡率、HIV（負向） | 結論一致；本作業選出的 7 個特徵中，收入組成、HIV/AIDS、成人死亡率影響最大（教育年數與收入組成高度相關 r = 0.92，資訊重疊，因此未入選） |
+| 線性回歸表現 | R² ≈ 0.85、RMSE ≈ 3.6 年 | 全特徵 R² 0.845、RMSE 3.80；7 特徵 R² 0.811、RMSE 4.21 |
+| 資料切分 | 多為隨機切分 | **依國家分組切分**，測試集是 37 個完全沒看過的國家 |
+
+本作業的 R² 略低於網路上常見的結果，主要原因是切分方式不同。隨機切分時，同一國家其他年份的資料已經出現在訓練集，模型等於「看過答案」，分數會偏高。本作業以國家分組切分，評估的是模型對**新國家**的預測能力，結果較保守，但更接近真實應用情境。
