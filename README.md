@@ -10,6 +10,18 @@
 
 ![CRISP-DM 資訊圖表](assets/crisp_dm_infographic.png)
 
+## 📦 繳交成果檔案清單（Deliverables）
+
+| 類別 | 檔案／連結 | 說明 |
+|---|---|---|
+| 主要繳交 | [GitHub Repo](https://github.com/susuannie/1028HW2) | 完整專案原始碼、分析與報告 |
+| 主要繳交 | [線上網站](https://1028hw2-pearl.vercel.app/)（`index.html`） | 互動式分析平台：Problem 1、Problem 2 與自訂資料集 |
+| 主程式 | [notebooks/HW2_Life_Expectancy_Regression.ipynb](notebooks/HW2_Life_Expectancy_Regression.ipynb) | CRISP-DM 六階段完整程式碼與統計推論 |
+| Optional 1 | [notebooks/HW2_report.pdf](notebooks/HW2_report.pdf) | 書面報告書 |
+| Optional 2 | [notebooks/Claude_conversation.pdf](notebooks/Claude_conversation.pdf) | Claude 對話紀錄（節錄） |
+| Optional 3 | [assets/crisp_dm_infographic.png](assets/crisp_dm_infographic.png) | CRISP-DM 資訊圖表 |
+| 完整封裝 | [notebooks/HW2_package.zip](notebooks/HW2_package.zip) | Notebook、報告書、對話紀錄與資訊圖表的壓縮檔 |
+
 ## 加分項目對照
 
 | 加分要求 | 實作 |
@@ -43,6 +55,7 @@
 ├── notebooks/HW2_Life_Expectancy_Regression.ipynb
 ├── notebooks/HW2_report.pdf           # 報告書（由本 README 產生）
 ├── notebooks/Claude_conversation.pdf  # AI（Claude）對話紀錄
+├── notebooks/HW2_package.zip          # 完整封裝（ipynb + 報告書 + 對話紀錄 + 資訊圖表）
 ├── data/Life Expectancy Data.csv      # Kaggle 原始資料
 ├── data/50_Startups.csv               # 自訂資料集範例
 ├── assets/crisp_dm_infographic.png    # CRISP-DM 資訊圖表
