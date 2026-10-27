@@ -8,6 +8,10 @@
 
 以 WHO 公開的各國健康與社經指標（193 國、2000–2015、2,938 筆、**20 個特徵**）進行多元線性回歸，依 CRISP-DM 完成資料理解、前處理、特徵選擇、建模、評估（含 95% 信賴／預測區間與五大回歸假設檢驗）到網頁部署。
 
+## 【資訊圖表】CRISP-DM Infographic
+
+> 作業 optional 項目「資訊圖表」：以一張圖呈現 CRISP-DM 六階段流程、Problem 1 成果指標、模型比較與主要影響因子。原始檔：[assets/crisp_dm_infographic.png](assets/crisp_dm_infographic.png)
+
 ![CRISP-DM 資訊圖表](assets/crisp_dm_infographic.png)
 
 ## 📦 繳交成果檔案清單（Deliverables）
